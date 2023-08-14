@@ -23,6 +23,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        /**
+         * URLをhttps変換
+         * ペジネーションのためのコード
+         */
+        \URL::forceScheme('https');
+        $this->app['request']->server->set('HTTPS','on');
     }
 }
