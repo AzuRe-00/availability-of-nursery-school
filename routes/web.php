@@ -3,6 +3,10 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+
+include __DIR__ . '/admin.php';
+include __DIR__ . '/user.php';
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
