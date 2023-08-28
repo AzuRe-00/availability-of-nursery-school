@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 
 include __DIR__ . '/admin.php';
-
+include __DIR__ . '/user.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +19,7 @@ include __DIR__ . '/admin.php';
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('front');
 });
 
 Route::get('/dashboard', function () {

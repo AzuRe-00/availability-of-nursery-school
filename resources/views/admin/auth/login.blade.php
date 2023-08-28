@@ -1,4 +1,5 @@
 <x-guest-layout>
+    <h1 class="text-black">保育施設　ログイン画面</h1>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
