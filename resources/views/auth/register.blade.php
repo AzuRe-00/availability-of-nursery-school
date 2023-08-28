@@ -1,4 +1,5 @@
 <x-guest-layout>
+    <h1 class="text-black">保護者様ご登録画面</h1>
     <form method="POST" action="{{ route('register') }}">
         @csrf
 

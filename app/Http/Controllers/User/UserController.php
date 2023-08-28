@@ -1,60 +1,59 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\User;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
-use App\Models\Admin;
+use App\Models\User;
 use IlluminateAuth\Events\Registered;
 use App\Providers\RouteServiceProvider;
 
-class AdminController extends Controller
+class UserController extends Controller
 {
     public function create()
     {
-        return view('admin.register');
+        return view('register');
     }
     
     public function store(Request $request)
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:' .Admin::class],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:' .User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
         
-        $admin = Admin::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
         
-        event(new Registered($admin));
+        event(new Registered($user));
         
-        Auth::guard('admin')->login($admin);
+        Auth::guard('user')->login($user);
         
         return redirect(RouteServiceProvider::Home);
     }
     
     public function index()
     {
-        if (Auth::guard('admins')->user()){
-            return redirect()->route('admin.dashboard');
+        if (Auth::guard('members')->user()){
+            return redirect()->route('dashboard');
         }
         
-        return view('admin.main');
-        
+        return view('main');
     }
     
     public function login(Request $request)
     {
-        $credentials = $request-> only(['email', 'password']);
+        $credentials = $request->only(['email', 'password']);
         
-        if (Auth::guard('admins')->attempt($credentials)){
-            return redirect()->route('admin.dashboard')->with([
+        if (Auth::guard('members')->attempt($credentials)){
+            return redirect()->route('user.dashboard')->with([
                 'login_msg' => 'ログインしました！',
             ]);
         }
@@ -66,11 +65,11 @@ class AdminController extends Controller
     
     public function logout(Request $request)
     {
-        Auth::guard('admins')->logout();
+        Auth::guard('members')->logout();
         $request->session()->regenerateToken();
         
-        return redirect()->route('admin.login.index')->with([
-            'logout_msg' => 'ログアウトしました！',
+        return redirect()->route('login.index')->with([
+            'auth' => ['ログアウトしました！'],
         ]);
     }
 }

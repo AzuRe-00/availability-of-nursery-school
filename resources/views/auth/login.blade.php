@@ -1,4 +1,5 @@
 <x-guest-layout>
+    <h1 class="text-black">保護者様ログイン画面</h1>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 

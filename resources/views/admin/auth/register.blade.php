@@ -1,6 +1,6 @@
 <x-guest-layout>
-    <h1 class="text-black">保育施設のご登録画面</h1>
-    <form method="POST" action="{{ route('admin.register') }}">
+    <h1 class="text-black">保育施設　ご登録画面</h1>
+    <form method="POST" action="{{ route('/admin/register') }}">
         @csrf
 
         <!-- Name -->
